@@ -32,11 +32,12 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 app.use(express.json());
+app.use(cors());
 app.use('/uploads', express.static('uploads'));
 
 app.post('/auth/login', loginValidation, handleValidationErrors, UserController.login);
 app.post('/auth/register', registerValidation, handleValidationErrors, UserController.register);
-app.get('/auth/me', checkAuth, UserController.getMe);
+app.get('/auth/me', cors(), checkAuth, UserController.getMe);
 
 app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
 	res.json({
@@ -44,11 +45,11 @@ app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
 	});
 });
 
-app.get('/tags', PostController.getLastTags);
+app.get('/tags', cors(), PostController.getLastTags);
 
-app.get('/posts', PostController.getAll);
-app.get('/posts/tags', PostController.getLastTags);
-app.get('/posts/:id', PostController.getOne);
+app.get('/posts', cors(), PostController.getAll);
+app.get('/posts/tags', cors(), PostController.getLastTags);
+app.get('/posts/:id', cors(), PostController.getOne);
 app.post('/posts', checkAuth, postCreateValidation, handleValidationErrors, PostController.create);
 app.delete('/posts/:id', checkAuth, PostController.remove);
 app.patch(
