@@ -35,11 +35,11 @@ app.use(express.json());
 app.use(cors());
 app.use('/uploads', express.static('uploads'));
 
-app.post('/auth/login', loginValidation, handleValidationErrors, UserController.login);
-app.post('/auth/register', registerValidation, handleValidationErrors, UserController.register);
+app.post('/auth/login', cors(),loginValidation, handleValidationErrors, UserController.login);
+app.post('/auth/register', cors(), registerValidation, handleValidationErrors, UserController.register);
 app.get('/auth/me', cors(), checkAuth, UserController.getMe);
 
-app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
+app.post('/upload', cors(),checkAuth, upload.single('image'), (req, res) => {
 	res.json({
 		url: `/uploads/${req.file.originalname}`,
 	});
@@ -50,10 +50,10 @@ app.get('/tags', cors(), PostController.getLastTags);
 app.get('/posts', cors(), PostController.getAll);
 app.get('/posts/tags', cors(), PostController.getLastTags);
 app.get('/posts/:id', cors(), PostController.getOne);
-app.post('/posts', checkAuth, postCreateValidation, handleValidationErrors, PostController.create);
-app.delete('/posts/:id', checkAuth, PostController.remove);
+app.post('/posts', cors(),checkAuth, postCreateValidation, handleValidationErrors, PostController.create);
+app.delete('/posts/:id',cors(), checkAuth, PostController.remove);
 app.patch(
-	'/posts/:id',
+	'/posts/:id',cors(),
 	checkAuth,
 	postCreateValidation,
 	handleValidationErrors,
