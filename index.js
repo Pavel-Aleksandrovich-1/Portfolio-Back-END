@@ -33,7 +33,7 @@ const upload = multer({ storage });
 
 app.use(express.json());
 app.use(cors());
-app.get('/uploads', express.static('uploads'));
+app.use('/uploads', express.static('uploads'));
 
 app.post('/auth/login', cors(),loginValidation, handleValidationErrors, UserController.login);
 app.post('/auth/register', cors(), registerValidation, handleValidationErrors, UserController.register);
