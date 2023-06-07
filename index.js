@@ -50,10 +50,10 @@ app.get('/tags', cors(), PostController.getLastTags);
 app.get('/posts', cors(), PostController.getAll);
 app.get('/posts/tags', cors(), PostController.getLastTags);
 app.get('/posts/:id', cors(), PostController.getOne);
-app.post('/posts', cors(),checkAuth, postCreateValidation, handleValidationErrors, PostController.create);
-app.delete('/posts/:id',cors(), checkAuth, PostController.remove);
+app.post('/posts', checkAuth, postCreateValidation, handleValidationErrors, PostController.create);
+app.delete('/posts/:id', checkAuth, PostController.remove);
 app.patch(
-	'/posts/:id',cors(),
+	'/posts/:id',
 	checkAuth,
 	postCreateValidation,
 	handleValidationErrors,
